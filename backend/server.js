@@ -46,8 +46,8 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Root route
-app.get('/', (req, res) => {
+// Root API route
+app.get('/api', (req, res) => {
   res.send('R. KANNAN MERN Stack Developer Portfolio API Server is running.');
 });
 
