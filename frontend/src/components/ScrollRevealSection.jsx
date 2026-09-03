@@ -16,8 +16,8 @@ export const ScrollRevealSection = ({
         setIsVisible(entry.isIntersecting);
       },
       {
-        threshold: 0.08,
-        rootMargin: '0px 0px -40px 0px'
+        threshold: 0.1,
+        rootMargin: '-20px 0px -20px 0px'
       }
     );
 
@@ -33,20 +33,20 @@ export const ScrollRevealSection = ({
       case 'fade-left':
         return isVisible 
           ? 'opacity-100 translate-x-0 scale-100' 
-          : 'opacity-0 -translate-x-10 scale-[0.98]';
+          : 'opacity-0 -translate-x-12 scale-95';
       case 'fade-right':
         return isVisible 
           ? 'opacity-100 translate-x-0 scale-100' 
-          : 'opacity-0 translate-x-10 scale-[0.98]';
+          : 'opacity-0 translate-x-12 scale-95';
       case 'scale-up':
         return isVisible 
           ? 'opacity-100 scale-100' 
-          : 'opacity-0 scale-95';
+          : 'opacity-0 scale-90';
       case 'fade-up':
       default:
         return isVisible 
           ? 'opacity-100 translate-y-0 scale-100' 
-          : 'opacity-0 translate-y-12 scale-[0.98]';
+          : 'opacity-0 translate-y-14 scale-95';
     }
   };
 
@@ -55,9 +55,11 @@ export const ScrollRevealSection = ({
       ref={sectionRef}
       id={id}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ease-out will-change-transform ${getVariantStyles()} ${className}`}
+      className={`snap-start snap-always min-h-[calc(100vh-80px)] flex flex-col justify-center py-6 transition-all duration-700 ease-out will-change-transform ${getVariantStyles()} ${className}`}
     >
-      {children}
+      <div className="w-full">
+        {children}
+      </div>
     </div>
   );
 };
