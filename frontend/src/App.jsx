@@ -11,6 +11,7 @@ import { Education } from './components/Education';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ScrollToTop } from './components/ScrollToTop';
+import { DeveloperCursor } from './components/DeveloperCursor';
 import { DeveloperBackground } from './components/DeveloperBackground';
 import { ScrollRevealSection } from './components/ScrollRevealSection';
 import { DeveloperSplashScreen } from './components/DeveloperSplashScreen';
@@ -32,46 +33,49 @@ export default function App() {
 
         <div className="relative min-h-screen bg-gray-50 dark:bg-accent-darkBg text-gray-900 dark:text-gray-100 font-sans selection:bg-teal-500 selection:text-white overflow-x-hidden">
           
-          {/* Interactive Developer Background & Web Click Effects */}
+          {/* Interactive Developer Background & Slow Web Click Effects */}
           <DeveloperBackground />
+
+          {/* Unique High-Tech Developer Cursor System */}
+          <DeveloperCursor />
 
           {/* Top Navbar */}
           <Navbar />
 
-          {/* Main Portfolio Sections with Section-by-Section Scroll Reveal Animations */}
+          {/* Main Portfolio Sections with Section-by-Section Scroll Reveal Animations for EVERY Section */}
           <main className="relative z-10 space-y-4">
             
-            <ScrollRevealSection id="hero-reveal" variant="fade-up">
+            <ScrollRevealSection id="hero" variant="fade-up" delay={0}>
               <Hero />
             </ScrollRevealSection>
 
-            <ScrollRevealSection id="about-reveal" variant="fade-right">
+            <ScrollRevealSection id="about" variant="fade-right" delay={100}>
               <About />
             </ScrollRevealSection>
 
-            <ScrollRevealSection id="skills-reveal" variant="scale-up">
+            <ScrollRevealSection id="skills" variant="scale-up" delay={100}>
               <Skills />
             </ScrollRevealSection>
 
-            <ScrollRevealSection id="experience-reveal" variant="fade-left">
+            <ScrollRevealSection id="experience" variant="fade-left" delay={100}>
               <Experience />
             </ScrollRevealSection>
 
-            <ScrollRevealSection id="projects-reveal" variant="fade-up">
+            <ScrollRevealSection id="projects" variant="fade-up" delay={100}>
               <Projects />
             </ScrollRevealSection>
 
-            <ScrollRevealSection id="education-reveal" variant="scale-up">
+            <ScrollRevealSection id="education" variant="scale-up" delay={100}>
               <Education />
             </ScrollRevealSection>
 
             <Suspense fallback={<div className="py-8 text-center text-xs text-gray-400 font-mono">Loading ATS Resume Engine...</div>}>
-              <ScrollRevealSection id="ats-reveal" variant="fade-up">
+              <ScrollRevealSection id="ats-resume" variant="fade-right" delay={100}>
                 <AtsResumeView />
               </ScrollRevealSection>
             </Suspense>
 
-            <ScrollRevealSection id="contact-reveal" variant="fade-right">
+            <ScrollRevealSection id="contact" variant="fade-up" delay={100}>
               <Contact />
             </ScrollRevealSection>
 
