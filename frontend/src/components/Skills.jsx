@@ -1,20 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
-import { Cpu, Code, Database, Wrench, CheckCircle, Sparkles } from 'lucide-react';
+import { Cpu, Sparkles } from 'lucide-react';
 
 export const Skills = () => {
   const { data } = usePortfolio();
   const skills = data?.skills || [];
   const [activeCategory, setActiveCategory] = useState('All');
+  const [isLoaded, setIsLoaded] = useState(false);
+  const sectionRef = useRef(null);
 
   const categories = ['All', 'Frontend', 'Backend', 'Database', 'Tools'];
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsLoaded(true);
+        }
+      },
+      { threshold: 0.12 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const filteredSkills = activeCategory === 'All'
     ? skills
     : skills.filter(s => s.category.toLowerCase().includes(activeCategory.toLowerCase()));
 
   return (
-    <section id="skills" className="py-20 bg-white dark:bg-accent-darkBg relative">
+    <section ref={sectionRef} id="skills" className="py-20 bg-white dark:bg-accent-darkBg relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -37,7 +56,7 @@ export const Skills = () => {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 ${
+              className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
                 activeCategory === cat
                   ? 'bg-gradient-to-r from-teal-500 to-indigo-600 text-white shadow-lg shadow-teal-500/20 scale-105'
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -74,11 +93,11 @@ export const Skills = () => {
                 </span>
               </div>
 
-              {/* Progress Bar */}
-              <div className="w-full h-2 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+              {/* Progress Bar (Animates width after section displays on screen) */}
+              <div className="w-full h-2.5 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-teal-500 to-indigo-600 transition-all duration-1000 ease-out"
-                  style={{ width: `${skill.level}%` }}
+                  className="h-full rounded-full bg-gradient-to-r from-teal-500 via-cyan-400 to-indigo-600 transition-all duration-1000 ease-out shadow-sm shadow-teal-500/50"
+                  style={{ width: isLoaded ? `${skill.level}%` : '0%' }}
                 />
               </div>
             </div>

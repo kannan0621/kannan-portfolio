@@ -12,10 +12,18 @@ export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
+
+      // Calculate horizontal reading scroll progress percentage
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        const currentProgress = (window.scrollY / totalHeight) * 100;
+        setScrollProgress(Math.min(100, Math.max(0, currentProgress)));
+      }
 
       const sections = ['home', 'about', 'skills', 'experience', 'projects', 'education', 'resume', 'contact'];
       const scrollPosition = window.scrollY + 200;
@@ -33,7 +41,8 @@ export const Navbar = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -196,6 +205,14 @@ export const Navbar = () => {
           </div>
         </div>
       )}
+
+      {/* Horizontal Page Scroll Progress Bar */}
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-200/40 dark:bg-gray-800/40 overflow-hidden">
+        <div 
+          className="h-full bg-gradient-to-r from-teal-400 via-cyan-400 to-indigo-500 rounded-r-full transition-all duration-150 shadow-md shadow-teal-500/50"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
     </header>
   );
 };

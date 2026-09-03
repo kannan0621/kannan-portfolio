@@ -1,10 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
-import { Briefcase, Calendar, MapPin, CheckCircle, ChevronRight } from 'lucide-react';
+import { Briefcase, Calendar, MapPin, ChevronRight } from 'lucide-react';
 
 export const Experience = () => {
   const { data } = usePortfolio();
   const experiences = data?.experience || [];
+  const timelineRef = useRef(null);
+  const [timelineProgress, setTimelineProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!timelineRef.current) return;
+      const rect = timelineRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Fill timeline as user scrolls through the experience section
+      const totalHeight = rect.height;
+      const startPoint = windowHeight * 0.7; // Start progress when top of timeline enters bottom 70% of screen
+      const currentScroll = startPoint - rect.top;
+
+      const progress = Math.min(100, Math.max(0, (currentScroll / totalHeight) * 100));
+      setTimelineProgress(progress);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <section id="experience" className="py-20 bg-gray-50/50 dark:bg-gray-900/50 relative">
@@ -25,12 +47,28 @@ export const Experience = () => {
         </div>
 
         {/* Timeline Container */}
-        <div className="relative border-l-2 border-teal-500/30 dark:border-teal-500/20 ml-4 sm:ml-8 space-y-12">
+        <div ref={timelineRef} className="relative ml-4 sm:ml-8 space-y-12">
+          
+          {/* Base Background Track Line */}
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-gray-200 dark:bg-gray-800 rounded-full" />
+
+          {/* Active Vertical Scroll Progress Bar Fill Line */}
+          <div
+            className="absolute left-0 top-0 w-1 bg-gradient-to-b from-teal-400 via-cyan-400 to-indigo-500 rounded-full transition-all duration-150 shadow-md shadow-teal-500/50"
+            style={{ height: `${timelineProgress}%` }}
+          />
+
           {experiences.map((exp, idx) => (
             <div key={exp.id || idx} className="relative pl-6 sm:pl-10 group">
               
-              {/* Timeline Dot */}
-              <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-teal-500 border-4 border-white dark:border-accent-darkBg group-hover:scale-125 transition-transform duration-200 shadow-md" />
+              {/* Timeline Dot with Glow Pulse */}
+              <div
+                className={`absolute -left-[6px] top-2.5 w-4 h-4 rounded-full border-4 border-white dark:border-accent-darkBg transition-all duration-300 ${
+                  timelineProgress > (idx / experiences.length) * 100
+                    ? 'bg-teal-500 scale-125 shadow-lg shadow-teal-500/60'
+                    : 'bg-gray-300 dark:bg-gray-700'
+                }`}
+              />
 
               {/* Card Container */}
               <div className="glass-card p-6 sm:p-8 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-xl transition-all duration-300">
