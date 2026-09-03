@@ -5,14 +5,9 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 90px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-}
-/* Hide default browser arrow on desktop for custom Developer Cursor */
-@media (hover: hover) and (pointer: fine) {
-  *, body, html {
-    cursor: none !important;
   }
 }
 /* Custom Scrollbar */
