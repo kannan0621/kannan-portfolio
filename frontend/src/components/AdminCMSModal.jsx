@@ -152,9 +152,7 @@ export const AdminCMSModal = () => {
               />
             </div>
 
-            <p className="text-[11px] text-gray-500 text-center">
-              Default Credentials: <code className="text-teal-500 font-mono">Admin</code> / <code className="text-teal-500 font-mono">admin@123</code>
-            </p>
+            {/* Credentials prompt removed for security */}
 
             <button
               type="submit"

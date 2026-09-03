@@ -107,7 +107,7 @@ export const PortfolioProvider = ({ children }) => {
         localStorage.setItem('portfolio_admin_user', JSON.stringify(dummyUser));
         return { success: true, user: dummyUser };
       }
-      return { success: false, message: 'Server connection error. Please try credentials: Admin / admin@123' };
+      return { success: false, message: 'Server connection error. Please check your credentials and try again.' };
     }
   };
 
