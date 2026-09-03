@@ -50,7 +50,7 @@ export const DeveloperBackground = () => {
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
-    // Particle class
+    // Background floating code particles
     class Particle {
       constructor() {
         this.reset();
@@ -60,12 +60,12 @@ export const DeveloperBackground = () => {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
         this.size = Math.random() * 10 + 10;
-        this.speedX = (Math.random() - 0.5) * 0.6;
-        this.speedY = (Math.random() - 0.5) * 0.6;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
         this.symbol = CODE_SYMBOLS[Math.floor(Math.random() * CODE_SYMBOLS.length)];
         this.opacity = Math.random() * 0.25 + 0.12;
         this.angle = Math.random() * Math.PI * 2;
-        this.spin = (Math.random() - 0.5) * 0.01;
+        this.spin = (Math.random() - 0.5) * 0.008;
       }
 
       update() {
@@ -86,8 +86,8 @@ export const DeveloperBackground = () => {
           if (dist < mouse.radius) {
             const force = (mouse.radius - dist) / mouse.radius;
             const angle = Math.atan2(dy, dx);
-            this.x -= Math.cos(angle) * force * 2.5;
-            this.y -= Math.sin(angle) * force * 2.5;
+            this.x -= Math.cos(angle) * force * 2;
+            this.y -= Math.sin(angle) * force * 2;
           }
         }
       }
@@ -116,37 +116,52 @@ export const DeveloperBackground = () => {
       }
     }
 
-    // Adjust particle count for mobile performance (Mobile: 12, Desktop: 36)
     const particleCount = isMobile ? 12 : Math.min(36, Math.floor((width * height) / 30000));
     const particles = Array.from({ length: particleCount }, () => new Particle());
 
+    // Slow, elegant click effects array
     const clickEffects = [];
 
     const handleWindowClick = (e) => {
       const clickX = e.clientX;
       const clickY = e.clientY;
 
+      // 1. Slow teal shockwave expansion ring
+      clickEffects.push({
+        type: 'ring',
+        x: clickX,
+        y: clickY,
+        radius: 5,
+        maxRadius: isMobile ? 90 : 140,
+        opacity: 0.9,
+        color: '20, 184, 166',
+        speed: 0.04
+      });
+
+      // 2. Slow purple secondary echo ring
       clickEffects.push({
         type: 'ring',
         x: clickX,
         y: clickY,
         radius: 0,
-        maxRadius: isMobile ? 60 : 85,
-        opacity: 1,
-        color: '14, 184, 166'
+        maxRadius: isMobile ? 130 : 190,
+        opacity: 0.7,
+        color: '168, 85, 247',
+        speed: 0.03
       });
 
+      // 3. Slower floating developer code snippets burst
       const numSnippets = isMobile ? 3 : 5;
       for (let i = 0; i < numSnippets; i++) {
         const angle = (Math.PI * 2 * i) / numSnippets + (Math.random() - 0.5);
-        const speed = Math.random() * 3 + 2;
+        const speed = Math.random() * 0.8 + 0.6; // Much slower velocity for smooth slow-motion floating
         const text = CLICK_SNIPPETS[Math.floor(Math.random() * CLICK_SNIPPETS.length)];
         clickEffects.push({
           type: 'code',
           x: clickX,
           y: clickY,
           vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed - 1.2,
+          vy: Math.sin(angle) * speed - 0.6, // Slow upward float
           text,
           opacity: 1,
           color: i % 2 === 0 ? '45, 212, 191' : '192, 132, 252'
@@ -156,7 +171,7 @@ export const DeveloperBackground = () => {
 
     window.addEventListener('click', handleWindowClick, { passive: true });
 
-    // Performance loop (pauses when document hidden)
+    // Render loop
     const render = () => {
       if (document.hidden) {
         animationFrameId = requestAnimationFrame(render);
@@ -169,7 +184,6 @@ export const DeveloperBackground = () => {
         particles[i].update();
         particles[i].draw();
 
-        // Laser lines (desktop only for max mobile FPS)
         if (!isMobile && mouse.x > 0) {
           const dx = mouse.x - particles[i].x;
           const dy = mouse.y - particles[i].y;
@@ -187,15 +201,16 @@ export const DeveloperBackground = () => {
         }
       }
 
-      // Process Click Effects
+      // Process Slow Click Effects
       for (let i = clickEffects.length - 1; i >= 0; i--) {
         const fx = clickEffects[i];
 
         if (fx.type === 'ring') {
-          fx.radius += (fx.maxRadius - fx.radius) * 0.18 + 1.2;
-          fx.opacity -= 0.04;
+          // Slow expansion loop (~2.0 seconds)
+          fx.radius += (fx.maxRadius - fx.radius) * fx.speed + 0.6;
+          fx.opacity -= 0.007; // Slow fade out
 
-          if (fx.opacity <= 0 || fx.radius >= fx.maxRadius) {
+          if (fx.opacity <= 0 || fx.radius >= fx.maxRadius - 2) {
             clickEffects.splice(i, 1);
             continue;
           }
@@ -205,13 +220,16 @@ export const DeveloperBackground = () => {
           ctx.arc(fx.x, fx.y, fx.radius, 0, Math.PI * 2);
           ctx.strokeStyle = `rgba(${fx.color}, ${fx.opacity})`;
           ctx.lineWidth = 2;
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = `rgba(${fx.color}, ${fx.opacity})`;
           ctx.stroke();
           ctx.restore();
         } else if (fx.type === 'code') {
+          // Slow floating text loop (~2.5 seconds)
           fx.x += fx.vx;
           fx.y += fx.vy;
-          fx.vy += 0.025;
-          fx.opacity -= 0.022;
+          fx.vy -= 0.003; // Gentle upward drift
+          fx.opacity -= 0.006; // Slow opacity decay
 
           if (fx.opacity <= 0) {
             clickEffects.splice(i, 1);
@@ -219,8 +237,10 @@ export const DeveloperBackground = () => {
           }
 
           ctx.save();
-          ctx.font = 'bold 11px monospace';
+          ctx.font = 'bold 12px monospace';
           ctx.fillStyle = `rgba(${fx.color}, ${fx.opacity})`;
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = `rgba(${fx.color}, ${fx.opacity})`;
           ctx.fillText(fx.text, fx.x, fx.y);
           ctx.restore();
         }
