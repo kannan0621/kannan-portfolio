@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  html {
+  html, body, * {
     scroll-behavior: smooth;
     scroll-padding-top: 70px;
     scroll-snap-type: y mandatory;
@@ -12,18 +12,14 @@
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
   }
-
-  body {
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
-  }
 }
 
-/* Hide scrollbar completely while maintaining full smooth scrolling functionality */
-::-webkit-scrollbar {
+/* Hide scrollbar completely everywhere while maintaining full smooth scrolling functionality */
+*::-webkit-scrollbar, ::-webkit-scrollbar {
   display: none !important;
   width: 0 !important;
   height: 0 !important;
+  background: transparent !important;
 }
 
 /* Custom Keyframe Animations */
