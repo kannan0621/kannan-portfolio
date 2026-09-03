@@ -38,8 +38,8 @@ export default function App() {
           {/* Top Navbar */}
           <Navbar />
 
-          {/* Main Portfolio Sections with Active Border Highlights on Scroll */}
-          <main className="relative z-10 space-y-6 max-w-7xl mx-auto px-2 sm:px-4">
+          {/* Main Portfolio Sections - Single Section Format Presentation */}
+          <main className="relative z-10">
             
             <ScrollRevealSection id="hero" variant="fade-up" delay={0}>
               <Hero />
