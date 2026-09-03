@@ -16,17 +16,17 @@ export const DeveloperSplashScreen = ({ onComplete }) => {
   const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
-    // Progress counter loop (0% -> 100%)
+    // Progress counter loop (0% -> 100%) - extended for smooth display
     const progressInterval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(progressInterval);
           return 100;
         }
-        const next = prev + 15;
+        const next = prev + 10;
         return next > 100 ? 100 : next;
       });
-    }, 120);
+    }, 180);
 
     // Terminal log line timer
     const logInterval = setInterval(() => {
@@ -37,7 +37,7 @@ export const DeveloperSplashScreen = ({ onComplete }) => {
         }
         return prev + 1;
       });
-    }, 200);
+    }, 320);
 
     return () => {
       clearInterval(progressInterval);
@@ -45,12 +45,12 @@ export const DeveloperSplashScreen = ({ onComplete }) => {
     };
   }, []);
 
-  // Handle completion exit when progress reaches 100%
+  // Handle completion exit with +1s additional viewing time
   useEffect(() => {
     if (progress === 100) {
       const exitTimer = setTimeout(() => {
         handleEnter();
-      }, 500);
+      }, 1500); // 1.5s display hold after 100% completion
       return () => clearTimeout(exitTimer);
     }
   }, [progress]);
@@ -59,17 +59,17 @@ export const DeveloperSplashScreen = ({ onComplete }) => {
     setIsExiting(true);
     setTimeout(() => {
       if (onComplete) onComplete();
-    }, 500);
+    }, 600);
   };
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-gray-950 text-white font-mono p-4 transition-all duration-500 ease-in-out ${
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-gray-950 text-white font-mono p-4 transition-all duration-600 ease-in-out ${
         isExiting ? 'opacity-0 scale-105 backdrop-blur-none pointer-events-none' : 'opacity-100 scale-100'
       }`}
     >
       {/* Background Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(20,184,166,0.15)_0,transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(20,184,166,0.18)_0,transparent_70%)] pointer-events-none" />
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 via-indigo-500 to-purple-500 animate-pulse" />
 
       {/* Main Terminal Window Card */}

@@ -13,15 +13,12 @@ export const ScrollRevealSection = ({
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          // Once revealed, keep it visible or let it stay revealed
-          observer.unobserve(entry.target);
-        }
+        // Re-trigger scroll animation every time section enters/exits view on scroll
+        setIsVisible(entry.isIntersecting);
       },
       {
-        threshold: 0.12,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.08,
+        rootMargin: '0px 0px -40px 0px'
       }
     );
 
@@ -36,12 +33,12 @@ export const ScrollRevealSection = ({
     switch (variant) {
       case 'fade-left':
         return isVisible 
-          ? 'opacity-100 translate-x-0' 
-          : 'opacity-0 -translate-x-12';
+          ? 'opacity-100 translate-x-0 scale-100' 
+          : 'opacity-0 -translate-x-14 scale-95';
       case 'fade-right':
         return isVisible 
-          ? 'opacity-100 translate-x-0' 
-          : 'opacity-0 translate-x-12';
+          ? 'opacity-100 translate-x-0 scale-100' 
+          : 'opacity-0 translate-x-14 scale-95';
       case 'scale-up':
         return isVisible 
           ? 'opacity-100 scale-100' 
@@ -49,8 +46,8 @@ export const ScrollRevealSection = ({
       case 'fade-up':
       default:
         return isVisible 
-          ? 'opacity-100 translate-y-0' 
-          : 'opacity-0 translate-y-14';
+          ? 'opacity-100 translate-y-0 scale-100' 
+          : 'opacity-0 translate-y-16 scale-95';
     }
   };
 

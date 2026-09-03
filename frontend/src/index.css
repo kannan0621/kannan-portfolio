@@ -9,18 +9,18 @@
     -moz-osx-font-smoothing: grayscale;
   }
 }
-/* Developer Styled Cursor System (Replaces default desktop arrow) */
+/* Developer Icon Only Cursor System (No arrow shape, pure developer icon badge floating at pointer) */
 @media (hover: hover) and (pointer: fine) {
   *, body, html {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L20 12 L11 14 L15 24 L11 26 L7 16 L2 20 Z' fill='%230f172a' stroke='%2314b8a6' stroke-width='2' stroke-linejoin='round'/%3E%3Crect x='12' y='18' width='18' height='12' rx='3' fill='%230f172a' stroke='%2314b8a6' stroke-width='1.5'/%3E%3Ctext x='21' y='27' font-family='monospace' font-size='8' font-weight='bold' fill='%232dd4bf' text-anchor='middle'%3E%26lt%3B/%26gt%3B%3C/text%3E%3C/svg%3E") 2 2, default !important;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='24' viewBox='0 0 36 24'%3E%3Crect x='1' y='1' width='34' height='22' rx='7' fill='%230f172a' stroke='%2314b8a6' stroke-width='2'/%3E%3Ctext x='18' y='16' font-family='monospace' font-size='12' font-weight='bold' fill='%232dd4bf' text-anchor='middle'%3E%26lt%3B/%26gt%3B%3C/text%3E%3C/svg%3E") 18 12, default !important;
   }
 
   a, button, [role="button"], input[type="submit"], input[type="button"], .clickable, .cursor-pointer, select {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L20 12 L11 14 L15 24 L11 26 L7 16 L2 20 Z' fill='%23064e3b' stroke='%2310b981' stroke-width='2' stroke-linejoin='round'/%3E%3Crect x='12' y='18' width='18' height='12' rx='3' fill='%23064e3b' stroke='%2310b981' stroke-width='1.5'/%3E%3Ctext x='21' y='27' font-family='monospace' font-size='9' font-weight='bold' fill='%2334d399' text-anchor='middle'%3E%26gt%3B_%3C/text%3E%3C/svg%3E") 2 2, pointer !important;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='24' viewBox='0 0 36 24'%3E%3Crect x='1' y='1' width='34' height='22' rx='7' fill='%23064e3b' stroke='%2310b981' stroke-width='2'/%3E%3Ctext x='18' y='16' font-family='monospace' font-size='13' font-weight='bold' fill='%2334d399' text-anchor='middle'%3E%26gt%3B_%3C/text%3E%3C/svg%3E") 18 12, pointer !important;
   }
 
   input[type="text"], input[type="email"], input[type="password"], textarea {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M7 3 H17 M12 3 V21 M7 21 H17' stroke='%2306b6d4' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E") 12 12, text !important;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='24' viewBox='0 0 32 24'%3E%3Crect x='1' y='1' width='30' height='22' rx='6' fill='%231e1b4b' stroke='%236366f1' stroke-width='2'/%3E%3Ctext x='16' y='16' font-family='monospace' font-size='12' font-weight='bold' fill='%23818cf8' text-anchor='middle'%3E%7B %7D%3C/text%3E%3C/svg%3E") 16 12, text !important;
   }
 }
 /* Custom Scrollbar */
@@ -106,14 +106,9 @@
   border: 1px solid rgba(31, 41, 55, 0.8);
 }
 
-/* Smooth section transitions & Mobile Core Web Vitals optimization */
+/* Smooth section transitions */
 section {
   will-change: transform, opacity;
-}
-
-section:not(#home) {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 650px;
 }
 
 /* ATS Resume Print Styles */
