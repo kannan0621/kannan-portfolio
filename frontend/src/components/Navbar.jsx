@@ -206,6 +206,13 @@ export const Navbar = () => {
         </div>
       )}
 
+      {/* Horizontal Page Scroll Progress Bar (Visible at top header) */}
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-200/40 dark:bg-gray-800/40 overflow-hidden">
+        <div 
+          className="h-full bg-gradient-to-r from-teal-400 via-cyan-400 to-indigo-500 rounded-r-full transition-all duration-150 shadow-md shadow-teal-500/50"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
     </header>
   );
 };
